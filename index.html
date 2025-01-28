@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Boxes and Slideshow</title>
+    <style>
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .slides {
+            display: none;
+            width: 100%;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            padding: 1px;
+        }
+
+        .dots-container {
+            text-align: center;
+            padding: 1px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: #ff3363;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        .section-title {
+            text-align: left;
+            padding: 1px;
+            font-size: 16px;
+            color: #030303;
+            font-style: Normal;
+            font-weight: bold;
+            font-family: 'Arial';
+            line-height: 1.6; /* Adjust line height to improve text readability */
+            margin-top: 8px; /* Ensure there’s space above the text */
+        }
+
+        /* 16:9 Aspect Ratio Box Styles */
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 13px; /* Space between image boxes */
+            padding: 6px;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent wrapping of items */
+        }
+
+        .image-box {
+            width: 250px; /* Fixed width for image boxes */
+            height: 159px; /* Fixed height to maintain aspect ratio */
+            overflow: hidden;
+            border-radius: 13px;
+            background-color: #f0f0f0;
+            display: inline-block;
+            flex: 0 0 auto; /* Prevent shrinking */
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slideshow Section -->
+<div class="slideshow-container">
+    <!-- Slide 1 -->
+    <div class="slides">
+        <a href="https://www.youtube.com/watch?v=iKI3kKz_6VM&list=RDiKI3kKz_6VM&start_radio=1">
+            <img src="https://i.vietgiaitri.com/2020/5/9/ngam-nhan-sac-miura-sakura-bup-be-loli-xinh-dep-cua-lang-phim-18-nhat-ban-eb092-4918530_default.jpg" class="slide-image" alt="Image 1">
+        </a>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slides">
+        <a href="https://channelvideov1.blogspot.com/2024/06/ulasan-infinix-gt-20-pro.html">
+            <img src="https://yehtaeoo.github.io/mmvlog.github.io/02.jpg" class="slide-image" alt="Image 2">
+        </a>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slides">
+        <a href="https://example.com/page3">
+            <img src="https://hiepsibaotap.com/wp-content/uploads/2019/01/thumb-1920-939737-1024x576.jpg" class="slide-image" alt="Image 3">
+        </a>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slides">
+        <a href="https://example.com/page4">
+            <img src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/01/resident-evil-2-hero-shot.jpg" class="slide-image" alt="Image 4">
+        </a>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slides">
+        <a href="https://example.com/page5">
+            <img src="https://hiepsibaotap.com/wp-content/uploads/2019/01/thumb-1920-939737-1024x576.jpg" class="slide-image" alt="Image 5">
+        </a>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slides">
+        <a href="https://example.com/page6">
+            <img src="https://cdn.mos.cms.futurecdn.net/ui5JzNHawYsBePZQRu4H7G-1200-80.jpg" class="slide-image" alt="Image 6">
+        </a>
+    </div>
+
+ <!-- Slide 7 -->
+    <div class="slides">
+        <a href="https://example.com/page6">
+            <img src="https://www.powerpyx.com/wp-content/uploads/resident-evil-8-village-wallpaper.jpg" class="slide-image" alt="Image 7">
+        </a>
+    </div>
+</div>
+
+<div class="dots-container" id="dots-container">
+    <!-- Dots will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Latest Content
+</div>
+
+<div class="container" id="image-container-1">
+    <!-- Image boxes for Latest Content will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Live Content
+</div>
+
+<div class="container" id="image-container-2">
+    <!-- Image boxes for Live Content will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Gaming Content
+</div>
+
+<div class="container" id="image-container-3">
+    <!-- Image boxes for Gaming Content will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Wild Life Content
+</div>
+
+<div class="container" id="image-container-4">
+    <!-- Image boxes for Wild Life Content will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Comics
+</div>
+
+<div class="container" id="image-container-5">
+    <!-- Image boxes for Comics will be dynamically added here -->
+</div>
+
+<div class="section-title">
+    Bookshelf
+</div>
+
+<div class="container" id="image-container-6">
+    <!-- Image boxes for Bookshelf will be dynamically added here -->
+</div>
+
+<script>
+    // Slideshow Script
+    let slideIndex = 0;
+    let slideInterval;
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("slides");
+        let dots = document.getElementsByClassName("dot");
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+
+    function currentSlide(n) {
+        slideIndex = n;
+        showSlides();
+        resetTimer();
+    }
+
+    function createDots() {
+        let slides = document.getElementsByClassName("slides");
+        let dotsContainer = document.getElementById("dots-container");
+
+        for (let i = 0; i < slides.length; i++) {
+            let dot = document.createElement("span");
+            dot.className = "dot";
+            dot.onclick = function() { currentSlide(i); };
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(showSlides, 6000);
+    }
+
+    // Initialize the slideshow
+    createDots();
+    showSlides();
+    slideInterval = setInterval(showSlides, 6000);
+
+    // Dynamic Image Boxes Script
+    const sections = {
+        1: [  // Latest Content
+            { src: "https://www.powerpyx.com/wp-content/uploads/resident-evil-8-village-wallpaper.jpg", href: "https://jav.guru/387558/midv-698-forced-to-share-a-room-with-a-harassing-boss-i-despise-during-a-business-trip-i-end-up-being-seduced-by-relentless-sex-and-finger-banging-which-makes-me-fall-momota-mitsuki/" },
+            { src: "https://hiepsibaotap.com/wp-content/uploads/2019/01/thumb-1920-939737-1024x576.jpg", href: "https://example.com/page5" },
+            { src: "https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/01/resident-evil-2-hero-shot.jpg", href: "https://example.com/page2" }
+            // Add more images as needed
+        ],
+        2: [  // Live Content
+            { src: "https://cdn.mos.cms.futurecdn.net/825FgcpyYGSvg6JLNxmy6D-1200-80.jpg", href: "https://example.com/page3" },
+            { src: "https://www.residentevildatabase.com/wp-content/uploads/2018/12/hands-on-re2-remake-december.jpg", href: "https://example.com/page4" }
+            // Add more images as needed
+        ],
+        3: [  // Gaming Content
+            { src: "https://cdn.mos.cms.futurecdn.net/ui5JzNHawYsBePZQRu4H7G-1200-80.jpg", href: "https://example.com/page5" },
+            { src: "https://hiepsibaotap.com/wp-content/uploads/2019/01/thumb-1920-939737-1024x576.jpg", href: "https://example.com/page6" }
+            // Add more images as needed
+        ],
+        4: [  // Wild Life Content
+            { src: "https://example.com/wildlife1.jpg", href: "https://example.com/wildlife-page1" },
+            { src: "https://example.com/wildlife2.jpg", href: "https://example.com/wildlife-page2" }
+            // Add more images as needed
+        ],
+        5: [  // Comics
+            { src: "https://example.com/comics1.jpg", href: "https://example.com/comics-page1" },
+            { src: "https://example.com/comics2.jpg", href: "https://example.com/comics-page2" }
+            // Add more images as needed
+        ],
+        6: [  // Bookshelf
+            { src: "https://example.com/bookshelf1.jpg", href: "https://example.com/bookshelf-page1" },
+            { src: "https://example.com/bookshelf2.jpg", href: "https://example.com/bookshelf-page2" }
+            // Add more images as needed
+        ]
+    };
+
+    function createImageBoxes(sectionNumber) {
+        const container = document.getElementById(`image-container-${sectionNumber}`);
+        container.innerHTML = ''; // Clear any existing boxes
+
+        sections[sectionNumber].forEach(link => {
+            if (link.src && link.href) { // Only create boxes if both src and href are provided
+                const box = document.createElement('div');
+                box.className = 'image-box';
+                const anchor = document.createElement('a');
+                anchor.href = link.href;
+                anchor.target = '_self'; // Ensure the link opens in the same tab
+                const img = document.createElement('img');
+                img.src = link.src;
+                img.alt = 'Image Box';
+                anchor.appendChild(img);
+                box.appendChild(anchor);
+                container.appendChild(box);
+            }
+        });
+    }
+
+    // Initialize the image boxes for all sections
+    for (let i = 1; i <= 6; i++) {
+        createImageBoxes(i);
+    }
+</script>
+
+</body>
+</html>
